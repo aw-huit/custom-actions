@@ -1,0 +1,22 @@
+# action.yml
+name: 'update tag'
+description: 'Greet someone and record the time'
+inputs:
+  latest-tag:  # id of input
+    description: 'latest tag version'
+    required: true
+    default: ''
+  message:
+    description: 'commit message'
+    required: true
+    default: ''
+outputs:
+  tag: # id of output
+    description: 'new tag'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.latest-tag }}
+    - ${{ inputs.message }}
+

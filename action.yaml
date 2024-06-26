@@ -39,3 +39,8 @@ runs:
       env:
         LATEST_TAG: ${{ inputs.latest-tag }}
         MESSAGE: ${{ inputs.message }}
+    - name: Set GitHub Path
+      run: echo "$GITHUB_ACTION_PATH" >> $GITHUB_PATH
+      shell: bash
+      env:
+        GITHUB_ACTION_PATH: ${{ github.action_path }}

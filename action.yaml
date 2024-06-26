@@ -36,6 +36,7 @@ runs:
           NEW_TAG=$(echo $NUM | awk -F. -v OFS=. '{$3 += 1 ; print}')
         fi
         echo "v${NEW_TAG}" >> $GITHUB_OUTPUT
+        echo "$EOF" >> $GITHUB_OUTPUT
       env:
         LATEST_TAG: ${{ inputs.latest-tag }}
         MESSAGE: ${{ inputs.message }}

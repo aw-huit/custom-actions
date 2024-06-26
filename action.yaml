@@ -5,14 +5,17 @@ inputs:
   latest-tag:  # id of input
     description: 'latest tag version'
     required: true
+    type: string
     default: ''
   message:
     description: 'commit message'
     required: true
+    type: string
     default: ''
 outputs:
   tag: # id of output
     description: 'new tag'
+    value: ${{ steps.updater.outputs.tag }}
 runs:
   using: 'docker'
   image: 'Dockerfile'

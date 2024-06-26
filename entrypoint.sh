@@ -1,4 +1,4 @@
-#!/usr/local/bin/bash -x
+#!/usr/local/bin/bash
 
 LATEST_TAG=$1
 MESSAGE=$2
@@ -20,5 +20,3 @@ else
 fi
 
 echo "v${NEW_TAG}" >> $GITHUB_OUTPUT
-# git tag $NEW_TAG
-# git push --tags

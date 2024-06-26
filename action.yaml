@@ -35,7 +35,7 @@ runs:
         #else
         #  NEW_TAG=$(echo $NUM | awk -F. -v OFS=. '{$3 += 1 ; print}')
         #fi
-        echo "v1.0.2" >> $GITHUB_OUTPUT
+        echo "NEWTAG=v1.0.2" >> $GITHUB_OUTPUT
         #echo "$EOF" >> $GITHUB_OUTPUT
       env:
         LATEST_TAG: ${{ inputs.latest-tag }}

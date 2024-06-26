@@ -1,11 +1,11 @@
 #!/usr/local/bin/bash -x
 
-# LATEST_TAG=$(git describe --tags --abbrev=0)
-# MESSAGE=$(git log --format=%B -n 1)
-
-echo $@
 LATEST_TAG=$1
 MESSAGE=$2
+
+if [[ "$LATEST_TAG" == '' ]]; then
+    exit 0
+fi
 if [[ "$LATEST_TAG" =~ ^v(.*) ]]; then 
     NUM=${BASH_REMATCH[1]}; 
 else 
@@ -19,6 +19,6 @@ else
     NEW_TAG=$(echo $NUM | awk -F. -v OFS=. '{$3 += 1 ; print}')
 fi
 
-echo "$NEW_TAG"
+echo "v${NEW_TAG}" >> $GITHUB_OUTPUT
 # git tag $NEW_TAG
 # git push --tags

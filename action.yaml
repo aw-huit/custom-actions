@@ -2,20 +2,26 @@
 name: 'update tag'
 description: 'Greet someone and record the time'
 inputs:
-  latest-tag:  # id of input
-    description: 'latest tag version'
+  path:  # id of input
+    description: 'the path to zip up recursively'
     required: true
     type: string
-    default: ''
-  message:
-    description: 'commit message'
+    default: '.'
+  zip-flle-name:
+    description: 'name of zip file'
     required: true
     type: string
+    default: 'files.zip'
+  exclusions:
+    description: 'files to exclude, space seprated'
+    required: false
+    type: string
     default: ''
-outputs:
-  tag: # id of output
-    description: 'new tag'
-    value: ${{ steps.updater.outputs.tag }}
+  inclusions:
+    description: 'files to include, space separated'
+    required: false
+    type: string
+    default: ''
 runs:
   using: 'composite'
   steps: 
@@ -23,19 +29,16 @@ runs:
       id: update
       shell: bash
       run: |
-        if [[ "$LATEST_TAG" =~ ^v(.*) ]]; then 
-            NUM=${BASH_REMATCH[1]}; 
-        else 
-            NUM=$LATEST_TAG
+        CMD="/usr/bin/zip -r $ZIPFILENAME $PATH "
+        if [[ $INCLUDES != '' ]]; then
+          CMD="${CMD} -i ${INCLUDES} "
         fi
-        if [[ "$MESSAGE" =~ '[major]' ]]; then
-            NEW_TAG=$(echo $NUM | awk -F. -v OFS=. '{$1 += 1 ; $2 = 0; $3 = 0; print}')
-        elif [[ "$MESSAGE" =~ '[minor]' ]]; then
-            NEW_TAG=$(echo $NUM | awk -F. -v OFS=. '{$2 += 1 ; $3 = 0; print}')
-        else
-          NEW_TAG=$(echo $NUM | awk -F. -v OFS=. '{$3 += 1 ; print}')
+        if [[ $EXCLUDES != '' ]]; then
+          CMD="${CMD} -x ${EXCLUDES} "
         fi
-        echo "NEWTAG=v${NEW_TAG}" >> $GITHUB_ENV
+        $CMD
       env:
-        LATEST_TAG: ${{ inputs.latest-tag }}
-        MESSAGE: ${{ inputs.message }}
+        PATH: ${{ inputs.path }}
+        ZIPFILENAME: ${{ inputs.zip-file-name }}
+        INCLUDES: ${{ inputs.includes }}
+        EXCLUDES: ${{ inputs.excludes }}

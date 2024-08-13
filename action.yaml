@@ -7,7 +7,7 @@ inputs:
     required: true
     type: string
     default: '.'
-  zip-flle-name:
+  zip-file-name:
     description: 'name of zip file'
     required: true
     type: string
